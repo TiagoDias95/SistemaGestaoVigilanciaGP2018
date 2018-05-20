@@ -1,0 +1,31 @@
+@using Microsoft.AspNetCore.Identity
+@using SistemaGestaoVigilanciaGP2018.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ApplicationUser currentUser = SignInManager.IsSignedIn(User) ? UserManager.GetUserAsync(User).Result as ApplicationUser : null;
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @*<a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">@UserManager.GetUserName(User)</a>*@
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">@currentUser.PrimeiroNome @currentUser.UltimoNome</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Sair</button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        @*<li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>*@
+        @*<li><input type="button" value="Sign In" asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-sm btn-block btn-primary navbar-btn"></li>*@
+        <li><input type="button" value="Entrar" onclick="location.href='@Url.Action("Login", "Account")'" class="btn btn-sm btn-block btn-primary navbar-btn"></li>
+    </ul>
+}
