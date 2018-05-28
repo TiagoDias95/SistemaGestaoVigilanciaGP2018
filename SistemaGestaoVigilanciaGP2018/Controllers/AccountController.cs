@@ -238,6 +238,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                     DataNascimento = model.DataNascimento,
                     PrimeiroNome = model.PrimeiroNome,
                     UltimoNome = model.UltimoNome,
+                    NumeroDocente = model.NumeroDocente,
                     Nacionalidade = model.Nacionalidade,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);

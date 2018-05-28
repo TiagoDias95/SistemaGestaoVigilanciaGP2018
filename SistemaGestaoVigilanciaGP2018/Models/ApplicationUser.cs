@@ -18,6 +18,9 @@ namespace SistemaGestaoVigilanciaGP2018.Models
         [Display(Name = "Ultimo Nome")]
         public string UltimoNome { get; set; }
 
+        [Display(Name = "Numero Docente")]
+        public string NumeroDocente { get; set; }
+
         // Data Nascimento Utilizador
         [DataType(DataType.Date)]
         [Display(Name = "Data de Nascimento")]

@@ -21,6 +21,10 @@ namespace SistemaGestaoVigilanciaGP2018.Models.AccountViewModels
         [Display(Name = "Ultimo Nome")]
         public string UltimoNome { get; set; }
 
+        [Required]
+        [Display(Name = "Numero de Docente")]
+        public string NumeroDocente { get; set; }
+
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
 
         [Required]
