@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UltimoNome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumeroDocente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnidadeCurricular)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataVigilancia)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UltimoNome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroDocente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnidadeCurricular)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataVigilancia)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PrimeiroNome">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PrimeiroNome">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PrimeiroNome">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

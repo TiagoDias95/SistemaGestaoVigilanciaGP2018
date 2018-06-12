@@ -1,0 +1,46 @@
+﻿@model PedidoVigilancia
+@{
+    ViewData["Title"] = "PedidoVigilanciaView";
+}
+
+<h2>PedidoVigilanciaView</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <br />
+            <h4>Por favor preencha o formulário abaixo.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PrimeiroNome"></label>
+                <input asp-for="PrimeiroNome" class="form-control" />
+                <span asp-validation-for="PrimeiroNome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UltimoNome"></label>
+                <input asp-for="UltimoNome" class="form-control" />
+                <span asp-validation-for="UltimoNome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroDocente"></label>
+                <input asp-for="NumeroDocente" class="form-control" />
+                <span asp-validation-for="NumeroDocente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataVigilancia"></label>
+                <input asp-for="DataVigilancia" class="form-control" />
+                <span asp-validation-for="DataVigilancia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnidadeCurricular"></label>
+                <input asp-for="UnidadeCurricular" class="form-control" />
+                <span asp-validation-for="UnidadeCurricular" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-sm btn-success">Validar</button>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

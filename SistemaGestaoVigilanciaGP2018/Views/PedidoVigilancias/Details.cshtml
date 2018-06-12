@@ -1,0 +1,42 @@
+﻿@model SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PedidoVigilancia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UltimoNome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UltimoNome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroDocente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroDocente)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UnidadeCurricular)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UnidadeCurricular)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataVigilancia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataVigilancia)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PrimeiroNome">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
