@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,6 +24,9 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         }
 
         // GET: PedidoVigilancias
+
+
+       [Authorize(Roles = "Utilizador")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.PedidoVigilancia.ToListAsync());
@@ -157,6 +161,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Utilizador")]
         public IActionResult VigiaRecusa()
         {
             return View();

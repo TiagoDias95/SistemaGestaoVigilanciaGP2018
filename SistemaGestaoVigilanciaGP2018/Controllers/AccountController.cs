@@ -68,7 +68,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                     if (!await _userManager.IsEmailConfirmedAsync(user))
                     {
                         ModelState.AddModelError(string.Empty,
-                                      "Tem de ter o mail consfirmado para fazer o Login");
+                                      "Tem de ter o mail confirmado para fazer o Login");
                         return View(model);
                     }
                 }
