@@ -11,8 +11,8 @@ namespace SistemaGestaoVigilanciaGP2018.Services
     {
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link)
         {
-            return emailSender.SendEmailAsync(email, "Confirm your email",
-                $"Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
+            return emailSender.SendEmailAsync(email, "Confirme o seu email",
+                $"Por favor confirme a sua conta ao clicar no seguinte link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
         }
     }
 }
