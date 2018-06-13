@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
     public class PedidoVigilanciasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+
 
         public PedidoVigilanciasController(ApplicationDbContext context)
         {
@@ -62,6 +65,9 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+
+
             return View(pedidoVigilancia);
         }
 
@@ -148,6 +154,12 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         private bool PedidoVigilanciaExists(string id)
         {
             return _context.PedidoVigilancia.Any(e => e.PrimeiroNome == id);
+        }
+
+        [HttpGet]
+        public IActionResult VigiaRecusa()
+        {
+            return View();
         }
     }
 }
