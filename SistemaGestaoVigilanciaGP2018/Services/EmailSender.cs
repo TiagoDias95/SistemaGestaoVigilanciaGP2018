@@ -26,7 +26,7 @@ namespace SistemaGestaoVigilanciaGP2018.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("ProgramasMobilidade@projeto.pt", "Grupo 4"),
+                From = new EmailAddress("SistemaVigilancia@projecto.com", "Grupo 2GP"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message,

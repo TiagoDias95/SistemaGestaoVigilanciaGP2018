@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -66,7 +68,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                     if (!await _userManager.IsEmailConfirmedAsync(user))
                     {
                         ModelState.AddModelError(string.Empty,
-                                      "You must have a confirmed email to log in.");
+                                      "Tem de ter o mail consfirmado para fazer o Login");
                         return View(model);
                     }
                 }
@@ -229,6 +231,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -240,24 +243,28 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                     UltimoNome = model.UltimoNome,
                     NumeroDocente = model.NumeroDocente,
                     Nacionalidade = model.Nacionalidade,
+                    ProtecaoDados=model.protecaoDados
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
+              
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User created a new account with password.");
 
-                    // Atribuir à role Utilizador
-                    await _userManager.AddToRoleAsync(user, "Utilizador");
+                        // Atribuir à role Utilizador
+                        await _userManager.AddToRoleAsync(user, "Utilizador");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                        await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    // Preventing new registered users to be automatically logged in
-                    // await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
-                }
+                        // Preventing new registered users to be automatically logged in
+                        // await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created a new account with password.");
+                        return RedirectToLocal(returnUrl);
+                    }
+           
+               
                 AddErrors(result);
             }
 
@@ -396,7 +403,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
                 await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                   $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                   $"Por favor indique a sua nova password após clicar neste link: <a href='{callbackUrl}'>link</a>");
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
 
