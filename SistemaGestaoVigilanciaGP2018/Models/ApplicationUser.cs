@@ -32,8 +32,15 @@ namespace SistemaGestaoVigilanciaGP2018.Models
         // Dados necessarios para candidatura
         public string Genero { get; set; }
 
-        [Display(Name = "Aceito que guardem os meus dados")]
+
         public bool ProtecaoDados { get; set; }
+
+
+        /// <summary>
+        /// Propriedade RoleType referente ao Tipo de Utilizador.
+        /// </summary>
+        public string RoleType { get; set; }
+
     }
 }
 

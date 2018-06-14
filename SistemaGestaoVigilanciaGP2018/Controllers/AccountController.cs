@@ -249,7 +249,18 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
               
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation("User created a new account with password.");
+                      if (user.RoleType == "Utilizador")
+                        {
+                        await _userManager.AddToRoleAsync(user, "Utilizador");
+
+                     }
+                     else if (user.RoleType == "Administrador")
+                    {
+
+                        await _userManager.AddToRoleAsync(user, "Administrador");
+
+                    }
+                    _logger.LogInformation("User created a new account with password.");
 
                         // Atribuir à role Utilizador
                         await _userManager.AddToRoleAsync(user, "Utilizador");

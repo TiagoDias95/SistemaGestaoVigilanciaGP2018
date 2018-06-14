@@ -21,6 +21,14 @@
                 <span asp-validation-for="UltimoNome" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="RoleType"></label>
+                <select asp-for="RoleType" class="form-control">
+                    <option value="Utilizador">Utilizador</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+                <span asp-validation-for="RoleType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="NumeroDocente"></label>
                 <input asp-for="NumeroDocente" class="form-control" />
                 <span asp-validation-for="NumeroDocente" class="text-danger"></span>
@@ -54,10 +62,11 @@
                 <div class="checkbox">
                     <h4>Os seus dados são importantes para nós, por isso pela entrada da nova lei de proteção de dados, iriamos pedir que aceite o tratamento dos seus dados pessoais.</h4>
                     <h4>Caso não aceite, não poderemos manter a sua informação na nossa base de dados.</h4>
-                    <label asp-for="protecaoDados">
-                        <input asp-for="protecaoDados" />
-                        @Html.DisplayNameFor(m => m.protecaoDados)
-                    </label>
+                    <div class="form-group">
+                        @Html.CheckBoxFor(x => x.protecaoDados)
+                        @Html.LabelFor(x => x.protecaoDados)
+                        @Html.ValidationMessageFor(x => x.protecaoDados)
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-sm btn-success">Registar</button>
