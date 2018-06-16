@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaGestaoVigilanciaGP2018.Models
 {
     public class PedidoVigilancia
     {
 
-        [Required]
-        public string IdPedido { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IdPedido { get; set; }
 
         [Required]
         [Display(Name = "Numero de Docente")]

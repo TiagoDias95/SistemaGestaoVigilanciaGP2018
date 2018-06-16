@@ -202,10 +202,10 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
 
                     b.Property<DateTime>("DataVigilancia");
 
-                    b.Property<string>("NumeroDocente")
+                    b.Property<string>("IdPedido")
                         .IsRequired();
 
-                    b.Property<string>("PrimeiroNome")
+                    b.Property<string>("NumeroDocente")
                         .IsRequired();
 
                     b.Property<string>("UltimoNome")

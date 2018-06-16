@@ -4,22 +4,22 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
 {
-    public partial class ProtecaoDados : Migration
+    public partial class Pedi : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "ProtecaoDados",
-                table: "AspNetUsers",
+            migrationBuilder.AddColumn<int>(
+                name: "IdPedido",
+                table: "PedidoVigilancia",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: "");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ProtecaoDados",
-                table: "AspNetUsers");
+                name: "IdPedido",
+                table: "PedidoVigilancia");
         }
     }
 }

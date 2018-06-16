@@ -11,8 +11,8 @@ using System;
 namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180613194508_ProtecaoDados")]
-    partial class ProtecaoDados
+    [Migration("20180616111115_Pedi")]
+    partial class Pedi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -172,6 +172,8 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
 
                     b.Property<bool>("ProtecaoDados");
 
+                    b.Property<string>("RoleType");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
@@ -200,6 +202,9 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DataVigilancia");
+
+                    b.Property<string>("IdPedido")
+                        .IsRequired();
 
                     b.Property<string>("NumeroDocente")
                         .IsRequired();

@@ -176,8 +176,8 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         {
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var pedido = new PedidoVigilancia { NumeroDocente = model.NumeroDocente, PrimeiroNome = model.PrimeiroNome, UltimoNome = model.UltimoNome, DataVigilancia = model.DataVigilancia, UnidadeCurricular = model.UnidadeCurricular };
-
+            var pedido = new PedidoVigilancia {IdPedido = model.IdPedido, NumeroDocente = model.NumeroDocente, PrimeiroNome = model.PrimeiroNome, UltimoNome = model.UltimoNome, DataVigilancia = model.DataVigilancia, UnidadeCurricular = model.UnidadeCurricular };
+            //pedido.IdPedido++;
             _context.Add(pedido);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
