@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -155,10 +156,33 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PedidoVigilanciaExists(string id)
+
+          private bool PedidoVigilanciaExists(string id)
         {
             return _context.PedidoVigilancia.Any(e => e.PrimeiroNome == id);
         }
+
+        [HttpGet]
+        //[Authorize(Roles = "Estudante")]
+        public IActionResult FazerPedido()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        //[Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> FazerPedido(PedidoVigilancia model)
+        {
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var pedido = new PedidoVigilancia { NumeroDocente = model.NumeroDocente, PrimeiroNome = model.PrimeiroNome, UltimoNome = model.UltimoNome, DataVigilancia = model.DataVigilancia, UnidadeCurricular = model.UnidadeCurricular };
+
+            _context.Add(pedido);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
 
         [HttpGet]
         [Authorize(Roles = "Utilizador")]

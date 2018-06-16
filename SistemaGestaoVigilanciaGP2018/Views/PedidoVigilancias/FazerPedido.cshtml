@@ -1,0 +1,48 @@
+﻿@model SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia
+
+@{
+    ViewData["Title"] = "FazerPedido";
+}
+
+<h2>FazerPedido</h2>
+
+<h4>PedidoVigilancia</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="FazerPedido">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NumeroDocente" class="control-label"></label>
+                <input asp-for="NumeroDocente" class="form-control" />
+                <span asp-validation-for="NumeroDocente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UltimoNome" class="control-label"></label>
+                <input asp-for="UltimoNome" class="form-control" />
+                <span asp-validation-for="UltimoNome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnidadeCurricular" class="control-label"></label>
+                <input asp-for="UnidadeCurricular" class="form-control" />
+                <span asp-validation-for="UnidadeCurricular" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataVigilancia" class="control-label"></label>
+                <input asp-for="DataVigilancia" class="form-control" />
+                <span asp-validation-for="DataVigilancia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

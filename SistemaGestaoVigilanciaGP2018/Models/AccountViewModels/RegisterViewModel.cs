@@ -51,10 +51,6 @@ namespace SistemaGestaoVigilanciaGP2018.Models.AccountViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        //[Range(typeof(bool), "true", "true", ErrorMessage = "Tem de aceitar o termo caso queira aceder á aplicação")]
-        [Required]
-        [Display(Name = "Aceito que guardem os meus dados")]
-        public bool protecaoDados { get; set; }
 
 
     }

@@ -63,16 +63,29 @@
                     <h4>Os seus dados são importantes para nós, por isso pela entrada da nova lei de proteção de dados, iriamos pedir que aceite o tratamento dos seus dados pessoais.</h4>
                     <h4>Caso não aceite, não poderemos manter a sua informação na nossa base de dados.</h4>
                     <div class="form-group">
-                        @Html.CheckBoxFor(x => x.protecaoDados)
-                        @Html.LabelFor(x => x.protecaoDados)
-                        @Html.ValidationMessageFor(x => x.protecaoDados)
+                        <input onchange="document.getElementById('but_submit').disabled = !this.checked;" type="checkbox">
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-sm btn-success">Registar</button>
+            <button id ="but_submit" disabled="" type="submit" class="btn btn-sm btn-success">Registar</button>
         </form>
     </div>
 </div>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
+
+
+@*<script>
+    // extend range validator method to treat checkboxes differently
+    var defaultRangeValidator = $.validator.methods.range;
+    $.validator.methods.range = function(value, element, param) {
+        if(element.type === 'checkbox') {
+            // if it's a checkbox return true if it is checked
+            return element.checked;
+        } else {
+            // otherwise run the default validation function
+            return defaultRangeValidator.call(this, value, element, param);
+        }
+    }
+</script>*@

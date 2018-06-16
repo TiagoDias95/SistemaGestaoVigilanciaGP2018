@@ -8,6 +8,14 @@ namespace SistemaGestaoVigilanciaGP2018.Models
 {
     public class PedidoVigilancia
     {
+
+        [Required]
+        public string IdPedido { get; set; }
+
+        [Required]
+        [Display(Name = "Numero de Docente")]
+        public string NumeroDocente { get; set; }
+
         [Required]
         [Key]
         [Display(Name = "Primeiro Nome")]
@@ -18,10 +26,6 @@ namespace SistemaGestaoVigilanciaGP2018.Models
         public string UltimoNome { get; set; }
 
         [Required]
-        [Display(Name = "Numero de Docente")]
-        public string NumeroDocente { get; set; }
-
-        [Required]
         [Display(Name = "Unidade Curricular")]
         public string UnidadeCurricular { get; set; }
 
@@ -29,6 +33,7 @@ namespace SistemaGestaoVigilanciaGP2018.Models
         [DataType(DataType.Date)]
         [Display(Name = "Data da Vigilancia")]
         public DateTime DataVigilancia { get; set; }
+
 
 
     }
