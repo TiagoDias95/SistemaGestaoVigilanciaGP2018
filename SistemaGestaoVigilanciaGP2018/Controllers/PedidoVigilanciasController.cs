@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FluentEmail.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using RestSharp;
+using RestSharp.Authenticators;
 using SistemaGestaoVigilanciaGP2018.Data;
 using SistemaGestaoVigilanciaGP2018.Models;
+using SistemaGestaoVigilanciaGP2018.Services;
+using System.Text.Encodings.Web;
 
 namespace SistemaGestaoVigilanciaGP2018.Controllers
 {
@@ -17,11 +27,14 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailSender _emailSender;
 
 
-        public PedidoVigilanciasController(ApplicationDbContext context)
+
+        public PedidoVigilanciasController(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
 
         // GET: PedidoVigilancias
@@ -176,13 +189,27 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         {
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var pedido = new PedidoVigilancia {IdPedido = model.IdPedido, NumeroDocente = model.NumeroDocente, PrimeiroNome = model.PrimeiroNome, UltimoNome = model.UltimoNome, DataVigilancia = model.DataVigilancia, UnidadeCurricular = model.UnidadeCurricular };
-            //pedido.IdPedido++;
+
+            var pedido = new PedidoVigilancia { IdPedido = model.IdPedido, NumeroDocente = model.NumeroDocente, PrimeiroNome = model.PrimeiroNome, UltimoNome = model.UltimoNome, DataVigilancia = model.DataVigilancia, UnidadeCurricular = model.UnidadeCurricular };      
             _context.Add(pedido);
             await _context.SaveChangesAsync();
+
+            var user = _context.Users.Where(u => u.NumeroDocente == pedido.NumeroDocente)
+             .Select(u => new {
+              ID = u.Id,
+               FirstName = u.PrimeiroNome,
+              LastName = u.UltimoNome,
+              email = u.Email
+                   }).Single();
+
+            ////var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var callbackUrl = Url.VigiaLink(user.ID, "", Request.Scheme);
+            var link = "http://localhost:64078/PedidoVigilancias/VigiaRecusa";
+            await _emailSender.SendEmailAsync(user.email,"Pedido de Vigilancia - EST" ,$"Por favor confirme o pedido de vigilancia ao clicar no seguinte link: < a href = '{HtmlEncoder.Default.Encode(link)}' > link </ a > ");
+
+
             return RedirectToAction(nameof(Index));
         }
-
 
         [HttpGet]
         [Authorize(Roles = "Utilizador")]
@@ -190,5 +217,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         {
             return View();
         }
+
+
     }
 }

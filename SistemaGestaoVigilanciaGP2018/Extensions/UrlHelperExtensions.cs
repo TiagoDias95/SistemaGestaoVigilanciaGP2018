@@ -25,5 +25,15 @@ namespace Microsoft.AspNetCore.Mvc
                 values: new { userId, code },
                 protocol: scheme);
         }
+
+        public static string VigiaLink(this IUrlHelper urlHelper, string userId, string code, string scheme)
+        {
+            return urlHelper.Action(
+                action: nameof(PedidoVigilanciasController.FazerPedido),
+                controller: "PedidoVigilancias",
+                values: new { userId, code },
+                protocol: scheme);
+        }
+
     }
 }
