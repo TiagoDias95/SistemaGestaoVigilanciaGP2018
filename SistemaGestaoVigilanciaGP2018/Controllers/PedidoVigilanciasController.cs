@@ -43,6 +43,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
        [Authorize(Roles = "Utilizador")]
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.PedidoVigilancia.ToListAsync());
         }
 
@@ -175,11 +176,40 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
             return _context.PedidoVigilancia.Any(e => e.PrimeiroNome == id);
         }
 
+        //public IActionResult GetCurso()
+        //{
+        //    var curso = _context.Curso.OrderBy(c => c.NomeCurso).Select(x => new { Id = x.IdC, Value = x.NomeCurso });
+        //    var model = new PedidoVigilancia();
+        //    model.CursoList = new SelectList(curso, "Id", "Value");
+
+        //    return View(model);
+        //}
+        //public IActionResult GetUC()
+        //{
+        //    var uc = _context.UnidadeCurricular.OrderBy(c => c.NomeUC).Select(x => new { Id = x.IdUC, Value = x.NomeUC });
+        //    var model = new PedidoVigilancia();
+        //    model.UCList = new SelectList(uc, "Id", "Value");
+
+        //    return View(model);
+        //}
+
         [HttpGet]
         //[Authorize(Roles = "Estudante")]
-        public IActionResult FazerPedido()
+        public IActionResult FazerPedido(int? id)
         {
+            if (id != null)
+            {
+                CursoDropDownList(id);
+                UCDropDownList(id);
+            }
+            else
+            {
+                CursoDropDownList();
+                UCDropDownList();
+            }
 
+            //ViewData["Curso"] = _context.Curso.ToList();
+            //ViewData["UnidadeCurricular"] = _context.UnidadeCurricular.ToList();
             return View();
         }
 
@@ -190,9 +220,26 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 
-            var pedido = new PedidoVigilancia { IdPedido = model.IdPedido, NumeroDocente = model.NumeroDocente, PrimeiroNome = model.PrimeiroNome, UltimoNome = model.UltimoNome, DataVigilancia = model.DataVigilancia, UnidadeCurricular = model.UnidadeCurricular };      
+            var pedido = new PedidoVigilancia {
+
+                IdPedido = model.IdPedido,
+                NumeroDocente = model.NumeroDocente,
+                PrimeiroNome = model.PrimeiroNome,
+                UltimoNome = model.UltimoNome,
+                UCList = model.UCList,
+                CursoList = model.CursoList,
+                DataVigilancia = model.DataVigilancia,
+                HoraVigilancia = model.HoraVigilancia,
+                Sala = model.Sala
+            };
+
+
+            //if (ModelState.IsValid) { 
             _context.Add(pedido);
             await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+
+            //}
 
             var user = _context.Users.Where(u => u.NumeroDocente == pedido.NumeroDocente)
              .Select(u => new {
@@ -207,17 +254,38 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
             var link = "http://localhost:64078/PedidoVigilancias/VigiaRecusa";
             await _emailSender.SendEmailAsync(user.email,"Pedido de Vigilancia - EST" ,$"Por favor confirme o pedido de vigilancia ao clicar no seguinte link: < a href = '{HtmlEncoder.Default.Encode(link)}' > link </ a > ");
 
+            CursoDropDownList(pedido.CursoId);
+            UCDropDownList(pedido.UCid);
 
             return RedirectToAction(nameof(Index));
+
+
         }
+
 
         [HttpGet]
         [Authorize(Roles = "Utilizador")]
         public IActionResult VigiaRecusa()
         {
+           
             return View();
         }
 
+        private void CursoDropDownList(object selectedCurso = null)
+        {
+            var curso = from p in _context.Curso
+                                     orderby p.NomeCurso
+                                     select p;
+            ViewBag.CursoId = new SelectList(curso.AsNoTracking(), "IdC", "NomeCurso", selectedCurso);
+        }
+
+        private void UCDropDownList(object selectedUC = null)
+        {
+            var uc = from p in _context.UnidadeCurricular
+                                        orderby p.NomeUC
+                                         select p;
+            ViewBag.UCid = new SelectList(uc.AsNoTracking(), "IdUC", "NomeUC", selectedUC);
+        }
 
     }
 }

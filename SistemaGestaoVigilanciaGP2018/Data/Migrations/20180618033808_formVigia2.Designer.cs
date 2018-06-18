@@ -11,9 +11,10 @@ using System;
 namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180618033808_formVigia2")]
+    partial class formVigia2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,18 +205,14 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
 
                     b.Property<string>("NomeCurso");
 
-                    b.Property<int?>("PedidoVigilanciaIdPedido");
-
                     b.HasKey("IdC");
-
-                    b.HasIndex("PedidoVigilanciaIdPedido");
 
                     b.ToTable("Curso");
                 });
 
             modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia", b =>
                 {
-                    b.Property<int>("IdPedido")
+                    b.Property<string>("PrimeiroNome")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CursoId");
@@ -224,13 +221,10 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
 
                     b.Property<DateTime>("HoraVigilancia");
 
+                    b.Property<int>("IdPedido")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<string>("NumeroDocente")
-                        .IsRequired();
-
-                    b.Property<string>("PrimeiroNome")
-                        .IsRequired();
-
-                    b.Property<string>("Sala")
                         .IsRequired();
 
                     b.Property<int>("UCid");
@@ -238,7 +232,7 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                     b.Property<string>("UltimoNome")
                         .IsRequired();
 
-                    b.HasKey("IdPedido");
+                    b.HasKey("PrimeiroNome");
 
                     b.ToTable("PedidoVigilancia");
                 });
@@ -252,11 +246,7 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
 
                     b.Property<string>("NomeUC");
 
-                    b.Property<int?>("PedidoVigilanciaIdPedido");
-
                     b.HasKey("IdUC");
-
-                    b.HasIndex("PedidoVigilanciaIdPedido");
 
                     b.ToTable("UnidadeCurricular");
                 });
@@ -304,20 +294,6 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.Curso", b =>
-                {
-                    b.HasOne("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia")
-                        .WithMany("CursoList")
-                        .HasForeignKey("PedidoVigilanciaIdPedido");
-                });
-
-            modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular", b =>
-                {
-                    b.HasOne("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia")
-                        .WithMany("UCList")
-                        .HasForeignKey("PedidoVigilanciaIdPedido");
                 });
 #pragma warning restore 612, 618
         }

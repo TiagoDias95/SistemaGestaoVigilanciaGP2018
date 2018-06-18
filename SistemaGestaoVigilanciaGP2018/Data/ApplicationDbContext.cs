@@ -24,5 +24,9 @@ namespace SistemaGestaoVigilanciaGP2018.Data
         }
 
         public DbSet<SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia> PedidoVigilancia { get; set; }
+
+        public DbSet<SistemaGestaoVigilanciaGP2018.Models.Curso> Curso { get; set; }
+        public DbSet<SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular> UnidadeCurricular { get; set; }
+
     }
 }
