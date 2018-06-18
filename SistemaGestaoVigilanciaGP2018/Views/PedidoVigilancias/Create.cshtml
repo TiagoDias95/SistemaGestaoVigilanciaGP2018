@@ -13,24 +13,48 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UltimoNome" class="control-label"></label>
-                <input asp-for="UltimoNome" class="form-control" />
-                <span asp-validation-for="UltimoNome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="NumeroDocente" class="control-label"></label>
                 <input asp-for="NumeroDocente" class="form-control" />
                 <span asp-validation-for="NumeroDocente" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UnidadeCurricular" class="control-label"></label>
-                <input asp-for="UnidadeCurricular" class="form-control" />
-                <span asp-validation-for="UnidadeCurricular" class="text-danger"></span>
+                <label asp-for="PrimeiroNome" class="control-label"></label>
+                <input asp-for="PrimeiroNome" class="form-control" />
+                <span asp-validation-for="PrimeiroNome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UltimoNome" class="control-label"></label>
+                <input asp-for="UltimoNome" class="form-control" />
+                <span asp-validation-for="UltimoNome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CursoList" class="control-label"></label>
+                <select asp-for="CursoId" class="form-control" asp-items="ViewBag.CursoId">
+                    <option value="">-- Selecione o Curso --</option>
+                </select>
+                <span asp-validation-for="CursoId" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <label asp-for="UCList" class="control-label"></label>
+                <select asp-for="UCid" class="form-control" asp-items="ViewBag.UCid">
+                    <option value="">-- Selecione a UC --</option>
+                </select>
+                <span asp-validation-for="CursoId" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Sala" class="control-label"></label>
+                <input asp-for="Sala" class="form-control" />
+                <span asp-validation-for="Sala" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DataVigilancia" class="control-label"></label>
                 <input asp-for="DataVigilancia" class="form-control" />
                 <span asp-validation-for="DataVigilancia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HoraVigilancia" class="control-label"></label>
+                <input asp-for="HoraVigilancia" class="form-control" />
+                <span asp-validation-for="HoraVigilancia" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

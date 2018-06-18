@@ -11,22 +11,55 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.UltimoNome)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UltimoNome)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.NumeroDocente)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.NumeroDocente)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.UnidadeCurricular)
+            @Html.DisplayNameFor(model => model.PrimeiroNome)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.UnidadeCurricular)
+            @Html.DisplayFor(model => model.PrimeiroNome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UltimoNome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UltimoNome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Curso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Curso)
+        </dd>
+        <dd>
+            @Html.DisplayFor(model => model.PrimeiroNome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UltimoNome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UltimoNome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Curso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Curso)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sala)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sala)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.DataVigilancia)
@@ -34,9 +67,16 @@
         <dd>
             @Html.DisplayFor(model => model.DataVigilancia)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraVigilancia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HoraVigilancia)
+        </dd>
+
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.PrimeiroNome">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.IdPedido">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
