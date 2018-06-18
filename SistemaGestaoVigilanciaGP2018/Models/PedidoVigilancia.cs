@@ -30,10 +30,13 @@ namespace SistemaGestaoVigilanciaGP2018.Models
 
         public int CursoId { get; set; }
         [Display(Name = "Curso")]
+        public string Curso { get; set; }
+
         public ICollection<Curso> CursoList { get; set; }
 
         public int UCid { get; set; }
         [Display(Name = "Unidade Curricular")]
+        public string UC { get; set; }
         public ICollection<UnidadeCurricular> UCList { get; set; }
 
         [Required]

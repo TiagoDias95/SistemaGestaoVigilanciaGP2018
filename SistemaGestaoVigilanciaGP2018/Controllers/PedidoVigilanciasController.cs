@@ -219,6 +219,17 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         {
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            var cur = _context.Curso.Where(u => u.IdC == model.CursoId)
+           .Select(u => new {
+               ID = u.IdC,
+               Nome = u.NomeCurso              
+           }).Single();
+
+            var uc = _context.UnidadeCurricular.Where(u => u.IdUC == model.UCid)
+          .Select(u => new {
+              ID = u.IdUC,
+              Nome = u.NomeUC
+          }).Single();
 
             var pedido = new PedidoVigilancia {
 
@@ -227,11 +238,15 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                 PrimeiroNome = model.PrimeiroNome,
                 UltimoNome = model.UltimoNome,
                 UCList = model.UCList,
-                CursoList = model.CursoList,
+                Curso = cur.Nome,
+                UC = uc.Nome,
                 DataVigilancia = model.DataVigilancia,
                 HoraVigilancia = model.HoraVigilancia,
                 Sala = model.Sala
             };
+
+            //pedido.CursoId.Equals(cur.ID)
+
 
 
             //if (ModelState.IsValid) { 
