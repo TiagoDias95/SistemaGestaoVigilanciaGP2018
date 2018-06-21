@@ -12,17 +12,19 @@ namespace SistemaGestaoVigilanciaGP2018.Services
         public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
         {
             Options = optionsAccessor.Value;
+           
         }
 
         public AuthMessageSenderOptions Options { get; } // Set via Secret Manager
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            return Execute(Options.SendGridKey, subject, message, email);
-        }
+            return Execute(System.Environment.GetEnvironmentVariable("SENDGRID_APIKEY"), subject, message, email);
+        }//System.Environment.GetEnvironmentVariable("SENDGRID_APIKEY")--no azure
 
         public Task Execute(string apiKey, string subject, string message, string email)
         {
+             //apiKey = System.Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {

@@ -29,14 +29,23 @@ namespace SistemaGestaoVigilanciaGP2018.Models
 
 
         public int CursoId { get; set; }
+
         [Display(Name = "Curso")]
         public string Curso { get; set; }
 
+
+        [Display(Name = "Curso")]
         public ICollection<Curso> CursoList { get; set; }
 
         public int UCid { get; set; }
-        [Display(Name = "Unidade Curricular")]
+        [Display(Name = "UC")]
         public string UC { get; set; }
+
+        [Display(Name = "Unidade Curricular")]
+        public UnidadeCurricular UnidadeCurricular { get; set; }
+
+
+        [Display(Name = "UC")]
         public ICollection<UnidadeCurricular> UCList { get; set; }
 
         [Required]
@@ -54,10 +63,15 @@ namespace SistemaGestaoVigilanciaGP2018.Models
         [Display(Name = "Data da Vigilancia")]
         public DateTime HoraVigilancia { get; set; }
 
+        [Display(Name = "Confirmar vigia")]
+        public bool ConfirmarVigia { get; set; }
+
+        public string Motivo { get; set; }
 
 
     }
 
+    [Table("Curso")]
     public class Curso
     {
         [Key]
@@ -67,6 +81,7 @@ namespace SistemaGestaoVigilanciaGP2018.Models
 
         public string NomeCurso { get; set; }
     }
+
 
     public class UnidadeCurricular
     {

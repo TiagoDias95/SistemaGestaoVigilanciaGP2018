@@ -32,6 +32,8 @@ namespace SistemaGestaoVigilanciaGP2018.Models
         // Dados necessarios para candidatura
         public string Genero { get; set; }
 
+        [Display(Name = "Numero de Vigias")]
+        public int NumeroVigias { get; set; }
 
         public bool ProtecaoDados { get; set; }
 

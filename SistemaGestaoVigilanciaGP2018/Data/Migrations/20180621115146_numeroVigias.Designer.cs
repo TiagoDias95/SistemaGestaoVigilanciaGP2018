@@ -3,15 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using SistemaGestaoVigilanciaGP2018.Data;
 using System;
 
 namespace SistemaGestaoVigilanciaGP2018.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180621115146_numeroVigias")]
+    partial class numeroVigias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,8 +161,6 @@ namespace SistemaGestaoVigilanciaGP2018.Migrations
                         .HasMaxLength(256);
 
                     b.Property<string>("NumeroDocente");
-
-                    b.Property<int>("NumeroVigias");
 
                     b.Property<string>("PasswordHash");
 

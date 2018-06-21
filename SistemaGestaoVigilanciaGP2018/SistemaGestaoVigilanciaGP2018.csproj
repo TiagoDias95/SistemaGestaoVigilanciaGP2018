@@ -5,11 +5,6 @@
     <UserSecretsId>aspnet-SistemaGestaoVigilanciaGP2018-A6E08D3D-2137-49A7-96C5-7243216ED9C0</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Data\Migrations\20180618055323_salas2.cs" />
-    <Compile Remove="Data\Migrations\20180618055323_salas2.Designer.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="FluentEmail.Mailgun" Version="2.4.1" />
