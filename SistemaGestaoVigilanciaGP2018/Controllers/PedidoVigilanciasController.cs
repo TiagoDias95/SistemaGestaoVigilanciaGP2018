@@ -26,7 +26,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
     public class PedidoVigilanciasController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
 
 
@@ -34,13 +34,14 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         public PedidoVigilanciasController(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            //_userManager = user;
             _emailSender = emailSender;
         }
 
         // GET: PedidoVigilancias
 
 
-       [Authorize(Roles = "Utilizador")]
+        [Authorize(Roles = "Utilizador,Administrador")]
         public async Task<IActionResult> Index()
         {
 
@@ -48,15 +49,15 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         }
 
         // GET: PedidoVigilancias/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
 
             var pedidoVigilancia = await _context.PedidoVigilancia
-                .SingleOrDefaultAsync(m => m.PrimeiroNome == id);
+                .SingleOrDefaultAsync(m => m.IdPedido == id);
             if (pedidoVigilancia == null)
             {
                 return NotFound();
@@ -91,14 +92,15 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         }
 
         // GET: PedidoVigilancias/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
 
-            var pedidoVigilancia = await _context.PedidoVigilancia.SingleOrDefaultAsync(m => m.PrimeiroNome == id);
+            var pedidoVigilancia = await _context.PedidoVigilancia.SingleOrDefaultAsync(m => m.IdPedido == id);
             if (pedidoVigilancia == null)
             {
                 return NotFound();
@@ -111,9 +113,10 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("PrimeiroNome,UltimoNome,NumeroDocente,UnidadeCurricular,DataVigilancia")] PedidoVigilancia pedidoVigilancia)
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Edit(int id, [Bind("PrimeiroNome,UltimoNome,NumeroDocente,UnidadeCurricular,DataVigilancia")] PedidoVigilancia pedidoVigilancia)
         {
-            if (id != pedidoVigilancia.PrimeiroNome)
+            if (id != pedidoVigilancia.IdPedido)
             {
                 return NotFound();
             }
@@ -127,7 +130,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PedidoVigilanciaExists(pedidoVigilancia.PrimeiroNome))
+                    if (!PedidoVigilanciaExists(pedidoVigilancia.IdPedido))
                     {
                         return NotFound();
                     }
@@ -142,15 +145,16 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         }
 
         // GET: PedidoVigilancias/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
 
             var pedidoVigilancia = await _context.PedidoVigilancia
-                .SingleOrDefaultAsync(m => m.PrimeiroNome == id);
+                .SingleOrDefaultAsync(m => m.IdPedido == id);
             if (pedidoVigilancia == null)
             {
                 return NotFound();
@@ -162,18 +166,18 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         // POST: PedidoVigilancias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pedidoVigilancia = await _context.PedidoVigilancia.SingleOrDefaultAsync(m => m.PrimeiroNome == id);
+            var pedidoVigilancia = await _context.PedidoVigilancia.SingleOrDefaultAsync(m => m.IdPedido == id);
             _context.PedidoVigilancia.Remove(pedidoVigilancia);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
 
-          private bool PedidoVigilanciaExists(string id)
+          private bool PedidoVigilanciaExists(int id)
         {
-            return _context.PedidoVigilancia.Any(e => e.PrimeiroNome == id);
+            return _context.PedidoVigilancia.Any(e => e.IdPedido == id);
         }
 
         //public IActionResult GetCurso()
@@ -194,7 +198,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         //}
 
         [HttpGet]
-        //[Authorize(Roles = "Estudante")]
+        [Authorize(Roles = "Administrador,Utilizador")]
         public IActionResult FazerPedido(int? id)
         {
             if (id != null)
@@ -214,10 +218,12 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador,Utilizador")]
         public async Task<IActionResult> FazerPedido(PedidoVigilancia model)
         {
+
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var count =0;
 
             var cur = _context.Curso.Where(u => u.IdC == model.CursoId)
            .Select(u => new {
@@ -231,6 +237,8 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
               Nome = u.NomeUC
           }).Single();
 
+
+
             var pedido = new PedidoVigilancia {
 
                 IdPedido = model.IdPedido,
@@ -238,15 +246,39 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                 PrimeiroNome = model.PrimeiroNome,
                 UltimoNome = model.UltimoNome,
                 UCList = model.UCList,
+                CursoList = model.CursoList,
                 Curso = cur.Nome,
                 UC = uc.Nome,
                 DataVigilancia = model.DataVigilancia,
                 HoraVigilancia = model.HoraVigilancia,
-                Sala = model.Sala
+                Sala = model.Sala,
             };
 
-            //pedido.CursoId.Equals(cur.ID)
 
+            var user = _context.Users.Where(u => u.NumeroDocente == pedido.NumeroDocente)
+              .Select(u => new
+              {
+                  ID = u.Id,
+                  nudo = u.NumeroDocente,
+                  email = u.Email,
+                  nume = u.NumeroVigias
+              }).FirstOrDefault();
+
+            var counter = (from o in _context.PedidoVigilancia
+                           where o.NumeroDocente == user.nudo
+                           from t in o.NumeroDocente
+                           select t).Count();
+            foreach (var p in _context.PedidoVigilancia)
+            {
+                foreach (var u in _context.Users)
+                {
+                    if (p.NumeroDocente == u.NumeroDocente)
+                    {
+                        u.NumeroVigias = count++;
+                    }
+                }
+            }
+                      
 
 
             //if (ModelState.IsValid) { 
@@ -255,18 +287,10 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
             //    return RedirectToAction(nameof(Index));
 
             //}
-
-            var user = _context.Users.Where(u => u.NumeroDocente == pedido.NumeroDocente)
-             .Select(u => new {
-              ID = u.Id,
-               FirstName = u.PrimeiroNome,
-              LastName = u.UltimoNome,
-              email = u.Email
-                   }).Single();
-
+     
             ////var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.VigiaLink(user.ID, "", Request.Scheme);
-            var link = "http://localhost:64078/PedidoVigilancias/VigiaRecusa";
+            var link = "http://http://sistemagestaovigilanciagp.azurewebsites.net/PedidoVigilancias/VigiaRecusa";
             await _emailSender.SendEmailAsync(user.email,"Pedido de Vigilancia - EST" ,$"Por favor confirme o pedido de vigilancia ao clicar no seguinte link: < a href = '{HtmlEncoder.Default.Encode(link)}' > link </ a > ");
 
             CursoDropDownList(pedido.CursoId);
@@ -279,12 +303,35 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "Utilizador")]
+        [Authorize(Roles = "Utilizador,Administrador")]
         public IActionResult VigiaRecusa()
         {
            
             return View();
         }
+
+        //[HttpPost]
+        ////[Authorize(Roles = "Administrador")]
+        //public IActionResult VigiaRecusa(ApplicationUser model)
+        //{
+
+        //    if (pedido.Confirma == false)
+        //    {
+        //        _context.
+
+        //    }
+
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        [Authorize(Roles = "Utilizador,Administrador")]
+        public async Task<IActionResult> ListaDocenteVigias()
+        {
+
+            return View(await _context.Users.ToListAsync());
+        }
+
+
 
         private void CursoDropDownList(object selectedCurso = null)
         {
