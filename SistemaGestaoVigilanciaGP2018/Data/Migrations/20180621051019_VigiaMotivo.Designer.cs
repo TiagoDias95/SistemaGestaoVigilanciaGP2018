@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using SistemaGestaoVigilanciaGP2018.Data;
 using System;
 
-namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
+namespace SistemaGestaoVigilanciaGP2018.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180617034632_mail")]
-    partial class mail
+    [Migration("20180621051019_VigiaMotivo")]
+    partial class VigiaMotivo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -196,28 +196,82 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.Curso", b =>
+                {
+                    b.Property<int>("IdC")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("IdpedidoV");
+
+                    b.Property<string>("NomeCurso");
+
+                    b.Property<int?>("PedidoVigilanciaIdPedido");
+
+                    b.HasKey("IdC");
+
+                    b.HasIndex("PedidoVigilanciaIdPedido");
+
+                    b.ToTable("Curso");
+                });
+
             modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia", b =>
                 {
-                    b.Property<string>("PrimeiroNome")
+                    b.Property<int>("IdPedido")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("ConfirmarVigia");
+
+                    b.Property<string>("Curso");
+
+                    b.Property<int>("CursoId");
 
                     b.Property<DateTime>("DataVigilancia");
 
-                    b.Property<int>("IdPedido")
-                        .ValueGeneratedOnAdd();
+                    b.Property<DateTime>("HoraVigilancia");
+
+                    b.Property<string>("Motivo");
 
                     b.Property<string>("NumeroDocente")
                         .IsRequired();
 
+                    b.Property<string>("PrimeiroNome")
+                        .IsRequired();
+
+                    b.Property<string>("Sala")
+                        .IsRequired();
+
+                    b.Property<string>("UC");
+
+                    b.Property<int>("UCid");
+
                     b.Property<string>("UltimoNome")
                         .IsRequired();
 
-                    b.Property<string>("UnidadeCurricular")
-                        .IsRequired();
+                    b.Property<int?>("UnidadeCurricularIdUC");
 
-                    b.HasKey("PrimeiroNome");
+                    b.HasKey("IdPedido");
+
+                    b.HasIndex("UnidadeCurricularIdUC");
 
                     b.ToTable("PedidoVigilancia");
+                });
+
+            modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular", b =>
+                {
+                    b.Property<int>("IdUC")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("IdpedidoV");
+
+                    b.Property<string>("NomeUC");
+
+                    b.Property<int?>("PedidoVigilanciaIdPedido");
+
+                    b.HasKey("IdUC");
+
+                    b.HasIndex("PedidoVigilanciaIdPedido");
+
+                    b.ToTable("UnidadeCurricular");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -263,6 +317,27 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.Curso", b =>
+                {
+                    b.HasOne("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia")
+                        .WithMany("CursoList")
+                        .HasForeignKey("PedidoVigilanciaIdPedido");
+                });
+
+            modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia", b =>
+                {
+                    b.HasOne("SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular", "UnidadeCurricular")
+                        .WithMany()
+                        .HasForeignKey("UnidadeCurricularIdUC");
+                });
+
+            modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular", b =>
+                {
+                    b.HasOne("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia")
+                        .WithMany("UCList")
+                        .HasForeignKey("PedidoVigilanciaIdPedido");
                 });
 #pragma warning restore 612, 618
         }

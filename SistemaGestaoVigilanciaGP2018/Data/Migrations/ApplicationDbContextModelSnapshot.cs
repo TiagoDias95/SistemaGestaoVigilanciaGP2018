@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using SistemaGestaoVigilanciaGP2018.Data;
 using System;
 
-namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
+namespace SistemaGestaoVigilanciaGP2018.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -218,6 +218,8 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                     b.Property<int>("IdPedido")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("ConfirmarVigia");
+
                     b.Property<string>("Curso");
 
                     b.Property<int>("CursoId");
@@ -225,6 +227,8 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                     b.Property<DateTime>("DataVigilancia");
 
                     b.Property<DateTime>("HoraVigilancia");
+
+                    b.Property<string>("Motivo");
 
                     b.Property<string>("NumeroDocente")
                         .IsRequired();
@@ -242,7 +246,11 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                     b.Property<string>("UltimoNome")
                         .IsRequired();
 
+                    b.Property<int?>("UnidadeCurricularIdUC");
+
                     b.HasKey("IdPedido");
+
+                    b.HasIndex("UnidadeCurricularIdUC");
 
                     b.ToTable("PedidoVigilancia");
                 });
@@ -315,6 +323,13 @@ namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
                     b.HasOne("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia")
                         .WithMany("CursoList")
                         .HasForeignKey("PedidoVigilanciaIdPedido");
+                });
+
+            modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia", b =>
+                {
+                    b.HasOne("SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular", "UnidadeCurricular")
+                        .WithMany()
+                        .HasForeignKey("UnidadeCurricularIdUC");
                 });
 
             modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular", b =>

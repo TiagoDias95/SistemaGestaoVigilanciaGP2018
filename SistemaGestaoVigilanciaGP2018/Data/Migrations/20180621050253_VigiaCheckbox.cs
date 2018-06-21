@@ -2,23 +2,23 @@
 using System;
 using System.Collections.Generic;
 
-namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
+namespace SistemaGestaoVigilanciaGP2018.Migrations
 {
-    public partial class Pedi : Migration
+    public partial class VigiaCheckbox : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "IdPedido",
+            migrationBuilder.AddColumn<bool>(
+                name: "ConfirmarVigia",
                 table: "PedidoVigilancia",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IdPedido",
+                name: "ConfirmarVigia",
                 table: "PedidoVigilancia");
         }
     }

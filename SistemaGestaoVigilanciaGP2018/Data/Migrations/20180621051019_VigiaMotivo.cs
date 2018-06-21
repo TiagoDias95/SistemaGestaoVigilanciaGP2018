@@ -2,23 +2,22 @@
 using System;
 using System.Collections.Generic;
 
-namespace SistemaGestaoVigilanciaGP2018.Data.Migrations
+namespace SistemaGestaoVigilanciaGP2018.Migrations
 {
-    public partial class sala : Migration
+    public partial class VigiaMotivo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Sala",
+                name: "Motivo",
                 table: "PedidoVigilancia",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Sala",
+                name: "Motivo",
                 table: "PedidoVigilancia");
         }
     }
