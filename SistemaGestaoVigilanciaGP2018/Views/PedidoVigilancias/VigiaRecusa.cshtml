@@ -1,14 +1,26 @@
-﻿
+﻿@model SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia
+
 @{
     ViewData["Title"] = "VigiaRecusa";
 }
 
 <div>
-    <h2>Comente o porque de não puder realizar a vigia na caixa de texto em baixo e depois confirme:  </h2>
 
-    <textarea rows="10" cols="100" name="comment" form="usrform">
-    </textarea>
+    <h2>Confirmação da Vigia</h2>
 
+    <h4>Caso não consiga confirmar, comente o porque de não puder realizar a vigia:  </h4>
+
+    @Html.TextArea("Motivo", null, new { @class = "form-control" })
+    
+
+    <div class="form-group">
+        <div class="checkbox">
+            <label asp-for="ConfirmarVigia">
+                <input asp-for="ConfirmarVigia" />
+                @Html.DisplayNameFor(m => m.ConfirmarVigia)
+            </label>
+        </div>
+    </div>
     <button type="submit" class="btn btn-sm btn-success">Enviar</button>
 </div>
 

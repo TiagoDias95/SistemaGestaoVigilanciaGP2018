@@ -16,13 +16,13 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120238219-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121176030-1"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+             window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                 gtag('js', new Date());
 
-        gtag('config', 'UA-120238219-1');
+                  gtag('config', 'UA-121176030-1');
     </script>
 </head>
 <body>
@@ -40,8 +40,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a asp-area="" asp-controller="PedidoVigilancias" asp-action="FazerPedido">Pedido Vigilancia</a></li>
-                    <li><a asp-area="" asp-controller="PedidoVigilancias" asp-action="VigiaRecusa">opcao2</a></li>
-                    <li><a asp-area="" asp-controller="PedidoVigilancias" asp-action="Execute">mail</a></li>
+                    <li><a asp-area="" asp-controller="PedidoVigilancias" asp-action="VigiaRecusa">Por implementar</a></li>
+                    <li><a asp-area="" asp-controller="PedidoVigilancias" asp-action="ListaDocenteVigias">Lista de Docentes</a></li>
                     <li><div id="google_translate_element" /></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
