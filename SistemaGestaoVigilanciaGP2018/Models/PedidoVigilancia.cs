@@ -68,8 +68,17 @@ namespace SistemaGestaoVigilanciaGP2018.Models
 
         public string Motivo { get; set; }
 
-
+        [EnumDataType(typeof(Estado))]
+        public Estado TipoEstado { get; set; }
     }
+
+        public enum Estado
+            {
+                EmEspera = 1,
+                Confirmado = 2,
+                recusado = 3
+            }
+
 
     [Table("Curso")]
     public class Curso
@@ -78,6 +87,15 @@ namespace SistemaGestaoVigilanciaGP2018.Models
         public int IdC { get; set; }
         public int IdpedidoV { get; set; }
 
+        public int UCIdd { get; set; }
+        [Display(Name = "UC")]
+        public string UC { get; set; }
+
+        [Display(Name = "Unidade Curricular")]
+        public UnidadeCurricular UnidadeCurricular { get; set; }
+
+        [Display(Name = "UC")]
+        public ICollection<UnidadeCurricular> UCList { get; set; }
 
         public string NomeCurso { get; set; }
     }
@@ -88,7 +106,10 @@ namespace SistemaGestaoVigilanciaGP2018.Models
         [Key]
         public int IdUC { get; set; }
         public int IdpedidoV { get; set; }
+        public int Cu_id { get; set; }
 
         public string NomeUC { get; set; }
+
+
     }
 }
