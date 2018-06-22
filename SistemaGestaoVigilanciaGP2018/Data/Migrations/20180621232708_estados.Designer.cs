@@ -12,9 +12,10 @@ using System;
 namespace SistemaGestaoVigilanciaGP2018.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180621232708_estados")]
+    partial class estados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,17 +210,9 @@ namespace SistemaGestaoVigilanciaGP2018.Migrations
 
                     b.Property<int?>("PedidoVigilanciaIdPedido");
 
-                    b.Property<string>("UC");
-
-                    b.Property<int>("UCIdd");
-
-                    b.Property<int?>("UnidadeCurricularIdUC");
-
                     b.HasKey("IdC");
 
                     b.HasIndex("PedidoVigilanciaIdPedido");
-
-                    b.HasIndex("UnidadeCurricularIdUC");
 
                     b.ToTable("Curso");
                 });
@@ -273,10 +266,6 @@ namespace SistemaGestaoVigilanciaGP2018.Migrations
                     b.Property<int>("IdUC")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Cu_id");
-
-                    b.Property<int?>("CursoIdC");
-
                     b.Property<int>("IdpedidoV");
 
                     b.Property<string>("NomeUC");
@@ -284,8 +273,6 @@ namespace SistemaGestaoVigilanciaGP2018.Migrations
                     b.Property<int?>("PedidoVigilanciaIdPedido");
 
                     b.HasKey("IdUC");
-
-                    b.HasIndex("CursoIdC");
 
                     b.HasIndex("PedidoVigilanciaIdPedido");
 
@@ -342,10 +329,6 @@ namespace SistemaGestaoVigilanciaGP2018.Migrations
                     b.HasOne("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia")
                         .WithMany("CursoList")
                         .HasForeignKey("PedidoVigilanciaIdPedido");
-
-                    b.HasOne("SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular", "UnidadeCurricular")
-                        .WithMany()
-                        .HasForeignKey("UnidadeCurricularIdUC");
                 });
 
             modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia", b =>
@@ -357,10 +340,6 @@ namespace SistemaGestaoVigilanciaGP2018.Migrations
 
             modelBuilder.Entity("SistemaGestaoVigilanciaGP2018.Models.UnidadeCurricular", b =>
                 {
-                    b.HasOne("SistemaGestaoVigilanciaGP2018.Models.Curso")
-                        .WithMany("UCList")
-                        .HasForeignKey("CursoIdC");
-
                     b.HasOne("SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia")
                         .WithMany("UCList")
                         .HasForeignKey("PedidoVigilanciaIdPedido");
