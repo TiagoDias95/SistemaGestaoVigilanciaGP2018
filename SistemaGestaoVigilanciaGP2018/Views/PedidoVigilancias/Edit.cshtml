@@ -58,6 +58,13 @@
                 <span asp-validation-for="HoraVigilancia" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="TipoEstado" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="TipoEstado" asp-items="Html.GetEnumSelectList<Estado>()"></select>
+                    <span asp-validation-for="TipoEstado" class="text-danger" />
+                </div>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>
