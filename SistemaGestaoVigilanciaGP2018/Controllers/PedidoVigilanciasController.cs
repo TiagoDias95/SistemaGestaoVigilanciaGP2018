@@ -95,6 +95,17 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int id)
         {
+            if (id != null)
+            {
+                CursoDropDownList(id);
+                UCDropDownList(id);
+            }
+            else
+            {
+                CursoDropDownList();
+                UCDropDownList();
+            }
+
             if (id == 0)
             {
                 return NotFound();
@@ -141,6 +152,8 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            CursoDropDownList(pedidoVigilancia.CursoId);
+            UCDropDownList(pedidoVigilancia.UCid);
             return View(pedidoVigilancia);
         }
 
@@ -224,6 +237,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
 
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var count =0;
+            var est = Estado.EmEspera;
 
             var cur = _context.Curso.Where(u => u.IdC == model.CursoId)
            .Select(u => new {
@@ -252,8 +266,10 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                 DataVigilancia = model.DataVigilancia,
                 HoraVigilancia = model.HoraVigilancia,
                 Sala = model.Sala,
+                TipoEstado = model.TipoEstado
             };
 
+            pedido.TipoEstado = est;
 
             var user = _context.Users.Where(u => u.NumeroDocente == pedido.NumeroDocente)
               .Select(u => new
@@ -275,6 +291,7 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
                     if (p.NumeroDocente == u.NumeroDocente)
                     {
                         u.NumeroVigias = count++;
+                        //p.TipoEstado = est;
                     }
                 }
             }
@@ -310,19 +327,45 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
             return View();
         }
 
-        //[HttpPost]
-        ////[Authorize(Roles = "Administrador")]
-        //public IActionResult VigiaRecusa(ApplicationUser model)
-        //{
+        [HttpPost]
+        [Authorize(Roles = "Utilizador,Administrador")]
+        public IActionResult VigiaRecusa(ApplicationUser model)
+        {
+            var user = _context.PedidoVigilancia.Where(u => u.NumeroDocente == model.NumeroDocente)
+           .Select(u => new
+           {
+              ConfirmarVigia = u.ConfirmarVigia,
+              Motivo = u.Motivo
+           }).FirstOrDefault();
 
-        //    if (pedido.Confirma == false)
-        //    {
-        //        _context.
 
-        //    }
+            var counter = (from o in _context.PedidoVigilancia
+                           where o.NumeroDocente == model.NumeroDocente
+                           from t in o.NumeroDocente
+                           select t).Count();
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+
+            foreach (var p in _context.PedidoVigilancia)
+            {
+                foreach (var u in _context.Users)
+                {
+                    if (p.NumeroDocente == u.NumeroDocente)
+                    {
+                        if (user.ConfirmarVigia == true)
+                        {
+                            p.TipoEstado = Estado.Confirmado;
+                        }
+
+                        p.TipoEstado = Estado.recusado;
+
+                    }
+
+                }
+            }
+
+
+            return RedirectToAction(nameof(Index));
+        }
 
         [Authorize(Roles = "Utilizador,Administrador")]
         public async Task<IActionResult> ListaDocenteVigias()
