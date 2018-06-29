@@ -13,7 +13,7 @@ namespace SistemaGestaoVigilanciaGP2018.Data
     {
         private static readonly string[] Roles = new string[]
         {
-            "Administrador","Utilizador"
+            "Regente","Docente"
         };
 
         public static async Task SeedRoles(IServiceProvider serviceProvider)
@@ -59,7 +59,7 @@ namespace SistemaGestaoVigilanciaGP2018.Data
                     admin.EmailConfirmed = true;
 
                     var appUser = await userManager.FindByNameAsync("admin@grupo2.gp");
-                    await userManager.AddToRoleAsync(appUser, "Administrador");
+                    await userManager.AddToRoleAsync(appUser, "Regente");
                 }
 
                 user = await userManager.FindByNameAsync("user@grupo2.gp");
@@ -77,7 +77,7 @@ namespace SistemaGestaoVigilanciaGP2018.Data
                     testUser.EmailConfirmed = true;
 
                     var appUser = await userManager.FindByNameAsync("user@grupo2.gp");
-                    await userManager.AddToRoleAsync(appUser, "Utilizador");
+                    await userManager.AddToRoleAsync(appUser, "Regente");
                 }
             }
         }

@@ -4,26 +4,37 @@
     ViewData["Title"] = "VigiaRecusa";
 }
 
-<div>
 
     <h2>Confirmação da Vigia</h2>
 
     <h4>Caso não consiga confirmar, comente o porque de não puder realizar a vigia:  </h4>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="VigiaRecusa">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IdPedido" />
+                @Html.TextArea("Motivo", null, new { @class = "form-control" })
 
-    @Html.TextArea("Motivo", null, new { @class = "form-control" })
-    
 
-    <div class="form-group">
-        <div class="checkbox">
-            <label asp-for="ConfirmarVigia">
-                <input asp-for="ConfirmarVigia" />
-                @Html.DisplayNameFor(m => m.ConfirmarVigia)
-            </label>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="ConfirmarVigia">
+                            <input asp-for="ConfirmarVigia" />
+                            @Html.DisplayNameFor(m => m.ConfirmarVigia)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </form>
         </div>
     </div>
 
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
-    <button type="submit" class="btn btn-sm btn-success">Enviar</button>
-</div>
-
-
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

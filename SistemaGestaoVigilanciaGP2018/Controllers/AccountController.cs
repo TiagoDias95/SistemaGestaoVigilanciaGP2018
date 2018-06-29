@@ -249,21 +249,21 @@ namespace SistemaGestaoVigilanciaGP2018.Controllers
               
                     if (result.Succeeded)
                     {
-                      if (user.RoleType == "Utilizador")
+                      if (user.RoleType == "Docente")
                         {
-                        await _userManager.AddToRoleAsync(user, "Utilizador");
+                        await _userManager.AddToRoleAsync(user, "Docente");
 
                      }
-                     else if (user.RoleType == "Administrador")
+                     else if (user.RoleType == "Regente")
                     {
 
-                        await _userManager.AddToRoleAsync(user, "Administrador");
+                        await _userManager.AddToRoleAsync(user, "Regente");
 
                     }
                     _logger.LogInformation("User created a new account with password.");
 
                         // Atribuir à role Utilizador
-                        await _userManager.AddToRoleAsync(user, "Utilizador");
+                        await _userManager.AddToRoleAsync(user, "Docente");
 
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);

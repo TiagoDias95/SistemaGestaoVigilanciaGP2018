@@ -1,0 +1,17 @@
+﻿@model SistemaGestaoVigilanciaGP2018.Models.PedidoVigilancia
+
+
+@{
+    ViewData["Title"] = "Erro User";
+}
+
+
+<h2>Erro: O numero de utilizador não existe na base de dados. Verifique se o utilizador que inseriu está registado</h2>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

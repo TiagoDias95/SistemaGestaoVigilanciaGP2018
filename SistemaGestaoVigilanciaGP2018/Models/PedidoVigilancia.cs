@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
 namespace SistemaGestaoVigilanciaGP2018.Models
 {
     public class PedidoVigilancia
@@ -13,6 +12,7 @@ namespace SistemaGestaoVigilanciaGP2018.Models
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
+        [Display(Name = "ID do Pedido")]
         public int IdPedido { get; set; }
 
         [Required]
